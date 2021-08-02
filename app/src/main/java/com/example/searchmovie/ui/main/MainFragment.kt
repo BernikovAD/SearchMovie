@@ -6,33 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.searchmovie.R
 import com.example.searchmovie.databinding.MainFragmentBinding
 import com.example.searchmovie.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
-    val _binding: MainFragmentBinding? = null
-    var binding: MainFragmentBinding
-        get() :MainFragmentBinding {
-            return _binding!!
-        }
+    private var _binding: MainFragmentBinding? = null
+    private val binding: MainFragmentBinding
+        get() = _binding!!
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
+    companion object { fun newInstance() = MainFragment() }
     private lateinit var viewModel: MainViewModel
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
     }
 
 }
